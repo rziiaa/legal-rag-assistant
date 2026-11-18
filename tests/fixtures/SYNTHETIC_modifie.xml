@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Fichier SYNTHÉTIQUE pour les tests : structure copiée d'un vrai article LEGI,
+     identifiants et texte inventés. Ce n'est pas un article du Code. -->
+<ARTICLE>
+<META>
+<META_COMMUN>
+<ID>LEGIARTI000000000001</ID>
+<NATURE>Article</NATURE>
+</META_COMMUN>
+<META_SPEC>
+<META_ARTICLE>
+<NUM>L9999-1</NUM>
+<ETAT>MODIFIE</ETAT>
+<DATE_DEBUT>2019-04-01</DATE_DEBUT>
+<DATE_FIN>2026-08-19</DATE_FIN>
+<TYPE>AUTONOME</TYPE>
+</META_ARTICLE>
+</META_SPEC>
+</META>
+<CONTEXTE>
+<TEXTE cid="LEGITEXT000037701019" nature="CODE">
+<TITRE_TXT id_txt="LEGITEXT000037701019">Code de la commande publique</TITRE_TXT>
+<TM>
+<TITRE_TM id="SCTA_A">Partie législative</TITRE_TM>
+<TM>
+<TITRE_TM id="SCTA_B">PREMIÈRE PARTIE : TEST</TITRE_TM>
+<TM>
+<TITRE_TM id="SCTA_C">Livre Ier : TEST</TITRE_TM>
+</TM>
+</TM>
+</TM>
+</TEXTE>
+</CONTEXTE>
+<VERSIONS>
+<VERSION etat="MODIFIE">
+<LIEN_ART debut="2019-04-01" etat="MODIFIE" fin="2026-08-19" id="LEGIARTI000000000001" num="L9999-1"/>
+</VERSION>
+<VERSION etat="VIGUEUR">
+<LIEN_ART debut="2026-08-19" etat="VIGUEUR" fin="2999-01-01" id="LEGIARTI000000000002" num="L9999-1"/>
+</VERSION>
+</VERSIONS>
+<NOTA>
+<CONTENU><p>Note de test.</p></CONTENU>
+</NOTA>
+<BLOC_TEXTUEL>
+<CONTENU>
+<p>
+<br/>Phrase d'introduction :<br/>1° Premier point ;<br/>2° Second   point.</p>
+<table><tr><td>Cellule A</td><td>Cellule B</td></tr></table>
+</CONTENU>
+</BLOC_TEXTUEL>
+</ARTICLE>

@@ -1,0 +1,19 @@
+# Secrets : ne jamais commiter
+.env
+.env.*
+!.env.example
+
+# Données et artefacts
+data/*
+!data/.gitkeep
+mlruns/
+*.parquet
+*.tar.gz
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
