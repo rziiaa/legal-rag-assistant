@@ -32,7 +32,7 @@ def conn(tmp_path):
     build_corpus(tmp_path / "ccp", tmp_path / "corpus", ARCHIVE, None)
 
     with psycopg.connect(TEST_URL) as c:
-        c.execute("DROP TABLE IF EXISTS article_version, corpus_meta")
+        c.execute("DROP TABLE IF EXISTS article_embedding, article_version, corpus_meta CASCADE")
         c.commit()
         result = load_corpus(c, tmp_path / "corpus")
         assert result["versions_chargees"] == 2

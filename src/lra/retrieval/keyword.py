@@ -62,6 +62,15 @@ def search(conn: psycopg.Connection, query: str, k: int = 10, as_of: str | None 
     return [Hit(i, *row[:7], float(row[7])) for i, row in enumerate(rows, start=1)]
 
 
+def print_hits(hits: list[Hit]) -> None:
+    if not hits:
+        print("Aucun résultat.")
+    for h in hits:
+        extrait = h.text.replace("\n", " ")[:160]
+        print(f"{h.rank:>2}. {h.num:<12} score={h.score:.4f}  {h.path}")
+        print(f"    {extrait}")
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     p.add_argument("query")
@@ -74,12 +83,7 @@ def main() -> int:
     if a.json:
         print(json.dumps([asdict(h) for h in hits], ensure_ascii=False, indent=2))
         return 0
-    if not hits:
-        print("Aucun résultat.")
-    for h in hits:
-        extrait = h.text.replace("\n", " ")[:160]
-        print(f"{h.rank:>2}. {h.num:<12} score={h.score:.4f}  {h.path}")
-        print(f"    {extrait}")
+    print_hits(hits)
     return 0
 
 

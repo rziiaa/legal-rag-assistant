@@ -43,3 +43,16 @@ CREATE TABLE IF NOT EXISTS article_version (
 CREATE INDEX IF NOT EXISTS article_version_tsv_idx ON article_version USING gin (tsv);
 CREATE INDEX IF NOT EXISTS article_version_num_idx ON article_version (num);
 CREATE INDEX IF NOT EXISTS article_version_dates_idx ON article_version (date_debut, date_fin);
+
+-- Embeddings : un vecteur par version d'article et par configuration (modèle + format du texte).
+-- Pas d'index approximatif (HNSW) : avec environ 2 400 vecteurs, la recherche exacte reste
+-- rapide et évite qu'une approximation fausse la comparaison des méthodes.
+CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE IF NOT EXISTS article_embedding (
+    article_id text NOT NULL REFERENCES article_version (id) ON DELETE CASCADE,
+    config     text NOT NULL,
+    embedding  vector(1024) NOT NULL,
+    created_at timestamptz NOT NULL DEFAULT now(),
+    PRIMARY KEY (article_id, config)
+);
