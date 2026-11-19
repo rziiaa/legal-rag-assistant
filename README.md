@@ -36,7 +36,9 @@ Aucun résultat chiffré n'est publié pour l'instant : les chiffres viendront u
 5. **Contrôler** : un programme vérifie que chaque article cité fait partie des articles retrouvés.
 
 Par défaut, seule la version d'un article applicable à la date du corpus est utilisée. Une version
-s'applique à une date `d` si `date_debut <= d < date_fin`.
+s'applique à une date `d` si `date_debut <= d < date_fin`, sauf les versions « mort-nées »
+(`MODIFIE_MORT_NE`), jamais entrées en vigueur, qui sont toujours exclues. Le contrôle
+`python -m lra.ingest.check` vérifie qu'aucun article n'a plus d'une version applicable.
 
 ## Prérequis
 

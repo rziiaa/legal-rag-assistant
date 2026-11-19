@@ -22,6 +22,17 @@ def test_check_counts_versions_at_date():
     assert r["dates_inversees_par_etat"] == {"MODIFIE_MORT_NE": 1}
 
 
+def test_stillborn_version_with_open_end_is_ignored():
+    # Cas réel observé (R2661-1) : version mort-née à fin ouverte + version en vigueur.
+    articles = [
+        art("R2661-1", "MODIFIE_MORT_NE", "2022-01-01", None, "mort"),
+        art("R2661-1", "VIGUEUR", "2026-08-16", None, "vigueur"),
+    ]
+    r = check(articles, "2026-11-08")
+    assert r["numeros_avec_plusieurs_versions_applicables"] == 0
+    assert r["numeros_avec_1_version_applicable"] == 1
+
+
 def test_check_detects_overlap():
     articles = [
         art("L1", "VIGUEUR", "2019-04-01", None, "a"),
