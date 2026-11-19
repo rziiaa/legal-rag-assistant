@@ -1,0 +1,21 @@
+services:
+  db:
+    # Image officielle pgvector, version figée pour la reproductibilité.
+    image: pgvector/pgvector:0.8.2-pg17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-lra}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-lra}
+      POSTGRES_DB: ${POSTGRES_DB:-lra}
+    ports:
+      # Accessible seulement depuis ta machine, pas depuis le réseau.
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-lra} -d ${POSTGRES_DB:-lra}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
