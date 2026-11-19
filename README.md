@@ -1,4 +1,4 @@
-# LexCommande — assistant RAG sur le Code de la commande publique
+# LexCommande : assistant RAG sur le Code de la commande publique
 
 LexCommande répond aux questions sur le **Code de la commande publique** en citant les articles qui
 justifient chaque réponse, et **refuse de répondre** quand il ne trouve pas de source suffisante.
