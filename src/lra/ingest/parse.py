@@ -148,11 +148,19 @@ def parse_article(data: bytes) -> ArticleVersion:
     )
 
 
-def is_applicable(date_debut: str, date_fin: str | None, as_of: str) -> bool:
+# États de versions qui ne sont jamais entrées en vigueur : exclues quelles que soient leurs dates.
+# Constaté dans l'archive du 2026-11-08 : une version MODIFIE_MORT_NE de R2661-1 a une date de
+# fin ouverte et chevauchait la version en vigueur ; les 71 autres ont des dates inversées.
+NEVER_APPLIED_STATES = frozenset({"MODIFIE_MORT_NE"})
+
+
+def is_applicable(date_debut: str, date_fin: str | None, as_of: str, etat: str | None = None) -> bool:
     """Vrai si la version s'applique à `as_of` (dates ISO AAAA-MM-JJ) : début <= date < fin.
 
     La date de fin est exclue : le jour où une version est remplacée, c'est la suivante qui
-    s'applique. Une version dont début == fin n'est jamais applicable. L'état (VIGUEUR,
-    MODIFIE...) n'est volontairement pas utilisé.
+    s'applique. Une version dont début == fin n'est jamais applicable. Seuls les états de
+    NEVER_APPLIED_STATES sont pris en compte ; les autres (VIGUEUR, MODIFIE...) ne décident pas.
     """
+    if etat in NEVER_APPLIED_STATES:
+        return False
     return date_debut <= as_of and (date_fin is None or as_of < date_fin)

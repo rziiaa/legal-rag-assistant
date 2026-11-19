@@ -66,6 +66,11 @@ def test_is_applicable(debut, fin, as_of, expected):
     assert is_applicable(debut, fin, as_of) is expected
 
 
+def test_stillborn_state_is_never_applicable():
+    assert is_applicable("2022-01-01", None, "2026-11-08", "MODIFIE_MORT_NE") is False
+    assert is_applicable("2022-01-01", None, "2026-11-08", "VIGUEUR") is True
+
+
 def test_external_entities_are_not_resolved(tmp_path):
     secret = tmp_path / "secret.txt"
     secret.write_text("NE_DOIT_PAS_APPARAITRE", encoding="utf-8")

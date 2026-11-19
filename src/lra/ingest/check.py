@@ -32,7 +32,7 @@ def check(articles: list[dict[str, Any]], as_of: str) -> dict[str, Any]:
         by_num[a["num"]].append(a)
 
     applicable_by_num = {
-        num: [a for a in versions if is_applicable(a["date_debut"], a["date_fin"], as_of)]
+        num: [a for a in versions if is_applicable(a["date_debut"], a["date_fin"], as_of, a["etat"])]
         for num, versions in by_num.items()
     }
     multiple = {num: vs for num, vs in applicable_by_num.items() if len(vs) > 1}
@@ -40,7 +40,7 @@ def check(articles: list[dict[str, Any]], as_of: str) -> dict[str, Any]:
 
     etat_x_applicable: dict[str, collections.Counter[str]] = collections.defaultdict(collections.Counter)
     for a in articles:
-        ok = is_applicable(a["date_debut"], a["date_fin"], as_of)
+        ok = is_applicable(a["date_debut"], a["date_fin"], as_of, a["etat"])
         etat_x_applicable[a["etat"]]["applicable" if ok else "non_applicable"] += 1
 
     inverted = collections.Counter(
@@ -49,7 +49,7 @@ def check(articles: list[dict[str, Any]], as_of: str) -> dict[str, Any]:
     vigueur_not_applicable = [
         {"num": a["num"], "id": a["id"], "debut": a["date_debut"], "fin": a["date_fin"]}
         for a in articles
-        if a["etat"] == "VIGUEUR" and not is_applicable(a["date_debut"], a["date_fin"], as_of)
+        if a["etat"] == "VIGUEUR" and not is_applicable(a["date_debut"], a["date_fin"], as_of, a["etat"])
     ]
 
     return {
