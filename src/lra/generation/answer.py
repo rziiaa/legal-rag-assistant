@@ -21,7 +21,7 @@ import re
 import sys
 from dataclasses import asdict, dataclass, field
 
-from lra.generation.llm import ANSWER_SCHEMA, LLM, MODELS, OllamaLLM
+from lra.generation.llm import ANSWER_SCHEMA, LLM, MODELS, make_llm
 from lra.generation.prompt import Passage, Prompt, build_user_message, load_prompt
 
 _NUM = re.compile(r"\b([LRDA])\s*\.?\s*(\d+(?:-\d+)*)\b")
@@ -123,7 +123,11 @@ def answer_question(
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     p.add_argument("question")
-    p.add_argument("--llm", default="qwen3:4b", help=f"modèle Ollama ({', '.join(MODELS)})")
+    p.add_argument(
+        "--llm",
+        default="qwen3:4b",
+        help=f"modèle Ollama ({', '.join(MODELS)}) ou groq:<modèle> pour l'API Groq",
+    )
     p.add_argument("--prompt", default="answer_v1")
     p.add_argument("--top", type=int, default=5, help="nombre d'articles fournis au modèle")
     p.add_argument("--threshold", type=float, default=None)
@@ -150,7 +154,7 @@ def main() -> int:
         for r in ranked
     ]
     top = ranked[0].rerank_score if ranked else None
-    ans = answer_question(a.question, passages, OllamaLLM(a.llm), load_prompt(a.prompt), top, a.threshold)
+    ans = answer_question(a.question, passages, make_llm(a.llm), load_prompt(a.prompt), top, a.threshold)
     out = asdict(ans)
     out.pop("raw_output")
     print(json.dumps(out, ensure_ascii=False, indent=2))
