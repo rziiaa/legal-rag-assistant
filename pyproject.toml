@@ -9,13 +9,20 @@ description = "LexCommande : assistant RAG sur le Code de la commande publique, 
 requires-python = ">=3.11"
 dependencies = [
     "lxml>=5",
+    "psycopg[binary]>=3.2",
+    "httpx>=0.27",
 ]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.5"]
+# torch s'installe à part, selon la machine (carte graphique ou non) : voir README.
+embed = ["sentence-transformers>=3"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+"lra.db" = ["*.sql"]
 
 [tool.ruff]
 line-length = 110
